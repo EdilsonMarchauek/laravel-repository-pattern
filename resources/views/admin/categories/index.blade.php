@@ -3,12 +3,12 @@
 @section('title', 'Listagem de Categorias')
 
 @section('content_header')
-    <h1>Categorias</h1>
+    <h1><a href="{{ route('categories.create') }}" class="btn btn-success">Add</a> Categorias</h1>
 @stop
 
 @section('content')
     <div class="content row">
-        <div class="box box-success">
+        <div class="box">
             <div class="box-body">
                   <table class="table table-striped">
                     <thead>

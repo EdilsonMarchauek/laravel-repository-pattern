@@ -2,9 +2,10 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\CategoryController;
 
 //Criando a Rota para o Controller
-Route::resource('admin/categories', 'App\Http\Controllers\Admin\CategoryController');
+Route::resource('admin/categories', CategoryController::class);
 
 
 Route::get('/', function () {
