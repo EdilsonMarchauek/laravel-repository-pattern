@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUpdateCategoryFormRequest;
 
 class CategoryController extends Controller
 {
@@ -33,12 +34,18 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreUpdateCategoryFormRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdateCategoryFormRequest $request)
     {
-        return 'CategoryController@store';
+        DB::table('categories')->insert([
+            'title'         => $request->title,
+            'url'           => $request->url,
+            'description'   => $request->description,
+        ]);
+
+        return redirect()->route('categories.index');
     }
 
     /**
