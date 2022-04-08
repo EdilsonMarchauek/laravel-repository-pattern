@@ -28,7 +28,9 @@
                             <td>{{ $category->url }}</td>
                             <td>{{ $category->description }}</td>
                             <td>
-                                #ações
+                                <a href="{{ route('categories.edit', $category->id)}}" class="badge bg-gradient-yellow">
+                                    Editar
+                                </a>
                             </td>
                         </tr>
                         @endforeach
