@@ -59,8 +59,12 @@
                         @endforeach
                     </tbody>
                   </table>
-                                 
-                  {{ $categories->links("pagination::bootstrap-4") }}
+                      
+                  @if (isset($data))
+                        {{ $categories->appends($data)->links("pagination::bootstrap-4") }}
+                  @else
+                        {{ $categories->links("pagination::bootstrap-4") }}
+                  @endif     
             </div>
         </div>
     </div>
