@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = DB::table('categories')->get();
+        $categories = DB::table('categories')->paginate(2);
         
         return view('admin.categories.index', compact('categories'));
     }
@@ -56,7 +56,13 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = DB::table('categories')->where('id', $id)->first();
+
+        //Verifica se a categoria existe
+        if (!$category)
+            return redirect()->back();
+
+        return view('admin.categories.show', compact('category'));    
     }
 
     /**
@@ -79,13 +85,21 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreUpdateCategoryFormRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreUpdateCategoryFormRequest $request, $id)
     {
-        return 'CategoryController@update';
+        DB::table('categories')
+            ->where('id', $id)
+            ->update([
+                'title'         => $request->title,
+                'url'           => $request->url,
+                'description'   => $request->description,
+            ]);
+
+        return redirect()->route('categories.index');   
     }
 
     /**
@@ -96,6 +110,43 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('categories')->where('id', $id)->delete();
+
+        return redirect()->route('categories.index');
     }
+
+
+    public function search(Request $request)
+    {
+        $data = $request->all();
+        
+        /*
+        $search = $request->search;
+
+        $categories = DB::table('categories')
+            ->where('title', $search)
+            ->orwhere('url', $search)
+            ->orwhere('description', 'LIKE', "%{$search}%")
+            ->get();
+        */
+
+        $categories = DB::table('categories')
+        ->where(function ($query) use ($data) {
+            if(isset($data['title'])){
+                $query->where('title', $data['title']);
+            }
+            if(isset($data['url'])){
+                $query->orWhere('url', $data['url']);
+            }
+            if(isset($data['description'])){
+                $desc = $data['description'];
+                $query->orWhere('description', 'LIKE', "%{$desc}%");
+            }
+        })
+        ->get();    
+
+
+       return view('admin.categories.index', compact('categories', 'data'));     
+    }
+
 }
