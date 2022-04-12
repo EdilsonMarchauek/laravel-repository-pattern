@@ -46,7 +46,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Título</th>
                             <th scope="col">url</th>
-                            <th width="120px" scope="col">Ações</th>
+                            <th width="150px" scope="col">Ações</th>
                         </tr>                   
                     </thead>
                     <tbody>
@@ -81,6 +81,7 @@
 
 @section('css')
     <link href="/css/app.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css" rel="stylesheet">
 @stop
 
 @section('js')

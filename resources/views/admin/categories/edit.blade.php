@@ -32,6 +32,7 @@
 
 @section('css')
     <link href="/css/app.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css" rel="stylesheet">
 @stop
 
 @section('js')
