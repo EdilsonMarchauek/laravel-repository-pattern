@@ -3,9 +3,16 @@
 @section('title', 'Listagem de Categorias')
 
 @section('content_header')
-    <h1><a href="{{ route('categories.create') }}" class="btn btn-success">Add</a> 
+
+    <span style="font-size: 20px;"><a href="{{ route('categories.create') }}" class="btn btn-success">Add</a> 
         Categorias
-    </h1>
+    </span>
+  
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="{{ route('home') }}"> Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('categories.index') }}"> Categorias</a></li>
+        
+    </ol>   
 @stop
 
 @section('content')
@@ -22,17 +29,18 @@
                     <button type="submit" class="btn btn-success">Pesquisar</button>
                 </form>
 
-                {{--
-                    @if (isset($search))
-                    <p><strong>Resultados para: </strong>{{ $search }}</p>
-                    @endif
-                --}}
+                @if (isset($data))
+                    <a href="{{ route('categories.index') }}">(x) Limpar Resultados da Pesquisa</a>
+                @endif 
             </div>
         </div>
 
         <div class="card card-outline card-success">
             <div class="box-body">
-                  <table class="table table-striped">
+
+                @include('admin.includes.alerts')
+                
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th scope="col">#</th>

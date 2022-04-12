@@ -3,9 +3,15 @@
 @section('title', 'Editar Categoria')
 
 @section('content_header')
-    <h1>
+    <span style="font-size: 20px;">
         Editar Categoria: {{ $category->title }}
-    </h1>
+    </span>
+
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="{{ route('home') }}"> Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('categories.index') }}"> Categorias</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('categories.edit', $category->id) }}"> Editar</a></li>
+    </ol> 
 @stop
 
 @section('content')

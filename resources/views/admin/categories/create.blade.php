@@ -3,10 +3,17 @@
 @section('title', 'Cadastrar Nova Categoria')
 
 @section('content_header')
-    <h1>
+    <span style="font-size: 20px;">
         Cadastrar Nova Categoria
-    </h1>
+    </span>
+
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="{{ route('home') }}"> Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('categories.index') }}"> Categorias</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('categories.create') }}"> Cadastrar</a></li>
+    </ol> 
 @stop
+
 
 @section('content')
     <div class="content row">

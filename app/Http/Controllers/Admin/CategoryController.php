@@ -16,7 +16,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = DB::table('categories')->paginate(1);
+        $categories = DB::table('categories')
+                                ->orderBy('id', 'desc')
+                                ->paginate();
         
         return view('admin.categories.index', compact('categories'));
     }
@@ -45,7 +47,9 @@ class CategoryController extends Controller
             'description'   => $request->description,
         ]);
 
-        return redirect()->route('categories.index');
+        return redirect()
+                ->route('categories.index')
+                ->withSuccess('Cadastro realizado com sucesso');
     }
 
     /**
@@ -143,7 +147,8 @@ class CategoryController extends Controller
                 $query->orWhere('description', 'LIKE', "%{$desc}%");
             }
         })
-        ->paginate(1);    
+        ->orderBy('id', 'desc')
+        ->paginate();    
 
 
        return view('admin.categories.index', compact('categories', 'data'));     

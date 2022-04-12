@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
 
+Route::get('home', function(){
+})->name('home');
+
 //Criando a Rota para a pesquisa
 Route::any('admin/categories/search', [CategoryController::class, 'search'])->name('categories.search');
 
