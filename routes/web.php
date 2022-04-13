@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
+
+//Criando a Rota para o Controller
+Route::resource('admin/products', ProductController::class);
 
 Route::get('home', function(){
 })->name('home');
