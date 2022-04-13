@@ -103,7 +103,9 @@ class CategoryController extends Controller
                 'description'   => $request->description,
             ]);
 
-        return redirect()->route('categories.index');   
+        return redirect()
+                ->route('categories.index')
+                ->withSuccess('Cadastro alterado com sucesso');   
     }
 
     /**
@@ -116,7 +118,9 @@ class CategoryController extends Controller
     {
         DB::table('categories')->where('id', $id)->delete();
 
-        return redirect()->route('categories.index');
+        return redirect()
+                ->route('categories.index')
+                ->withSuccess('Cadastro excluído com sucesso');
     }
 
 
