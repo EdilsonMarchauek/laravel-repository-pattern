@@ -1,17 +1,17 @@
 @extends('adminlte::page')
 
-@section('title', 'Cadastrar Novo Produto')
+@section('title', 'Editar Produto')
 
 @section('content_header')
 
     <span style="font-size: 20px;">
-        Cadastrar Novo Produto
+        Editar Produto: {{ $product->name }}
     </span>
   
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="{{ route('home') }}"> Dashboard</a></li>
         <li class="breadcrumb-item"><a href="{{ route('products.index') }}"> Produtos</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('products.create') }}"> Cadastrar</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('products.edit', $product->id) }}"> Editar</a></li>
         
     </ol>   
 @stop
@@ -23,9 +23,10 @@
         <div class="box-body" style="padding: 10px">
 
             @include ('admin.includes.alerts')
-
-            <form action="{{ route('products.store') }}" method="post" class="form">
-               @include ('admin.products._partials.form')
+            
+            <form action="{{ route('products.update', $product->id) }}" method="POST" class="form">
+                @method('PUT')
+                @include ('admin.products._partials.form')
             </form>
         </div>
     </div>

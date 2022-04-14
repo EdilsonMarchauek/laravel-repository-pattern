@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Models\Product;
 use App\Models\Models\Category;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUpdateProductFormRequest;
 
 class ProductController extends Controller
 {
@@ -47,10 +48,10 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreUpdateProductFormRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdateProductFormRequest $request)
     {
         /* primeira forma de cadastrar
         $category = Category::find($request->category_id);
@@ -84,19 +85,30 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categories = Category::all();
+
+        if(!$product = $this->product->find($id))
+            return redirect()->back();
+        
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreUpdateProductFormRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreUpdateProductFormRequest $request, $id)
     {
-        //
+            $this->product
+                    ->find($id)
+                    ->update($request->all());
+
+            return redirect()
+                            ->route('products.index')
+                            ->withSuccess('Produto atualizado com sucesso');
     }
 
     /**
