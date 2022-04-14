@@ -24,10 +24,16 @@
 
             @include ('admin.includes.alerts')
             
-            <form action="{{ route('products.update', $product->id) }}" method="POST" class="form">
+            {{-- <form action="{{ route('products.update', $product->id) }}" method="POST" class="form">
                 @method('PUT')
                 @include ('admin.products._partials.form')
-            </form>
+            </form> --}}
+
+            {{ Form::model($product, ['route' => ['products.update', $product->id ], 'class' => 'form']) }}
+                @method('PUT')
+                @include ('admin.products._partials.form')
+            {{ Form::close() }}    
+
         </div>
     </div>
 </div>

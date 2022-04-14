@@ -24,9 +24,13 @@
 
             @include ('admin.includes.alerts')
 
-            <form action="{{ route('products.store') }}" method="post" class="form">
+            {{-- <form action="{{ route('products.store') }}" method="post" class="form">
                @include ('admin.products._partials.form')
-            </form>
+            </form> --}}
+
+            {{  Form::open(['route' => 'products.store', 'class' => 'form'])   }}
+                @include ('admin.products._partials.form')
+            {{ Form::close() }}    
         </div>
     </div>
 </div>
