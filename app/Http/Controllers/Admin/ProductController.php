@@ -75,7 +75,13 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        //with = pega o relacionamento do model product
+        $product = $this->product->with('category')->where('id', $id)->first();
+
+        if(!$product)
+        return redirect()->back();
+
+        return view('admin.products.show', compact('product'));
     }
 
     /**
@@ -120,6 +126,12 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->product
+        ->find($id)
+        ->delete();
+
+        return redirect()
+                ->route('products.index')
+                ->withSuccess('Deletado com sucesso!');
     }
 }
