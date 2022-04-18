@@ -26,11 +26,13 @@
                         <option value="">Categoria</option>
                         {{-- Para utilizar a variavel $categories precisa criar no AppServiceProvider.php passando pra cá--}}
                         @foreach ($categories as $id => $category)
-                            <option value="{{ $id }}">{{ $category }}</option>
+                            <option value="{{ $id }}" @if (isset($filters['category']) && $filters['category'] == $id)
+                                selected 
+                                @endif >{{ $category }}</option>
                         @endforeach
                     </select>
-                    <input type="text" name="name" placeholder="Nome:" class="form-control">
-                    <input type="text" name="price" placeholder="Preço:" class="form-control">
+                    <input type="text" name="name" placeholder="Nome:" class="form-control" value="{{ $filters['name'] ?? '' }}">
+                    <input type="text" name="price" placeholder="Preço:" class="form-control" value="{{ $filters['price'] ?? '' }}">
 
                     <button type="submit" class="btn btn-success">Pesquisar</button>
                 </form>
@@ -69,7 +71,13 @@
                         @endforeach
                     </tbody>
                   </table>
-                      
+
+                 {{-- Verifica se existe a variável filters do método search passando pra cá appends($filters)--}}
+                 @if (isset($filters))
+                     {!! $products->appends($filters)->links("pagination::bootstrap-4") !!} 
+                 @else
+                    {!! $products->links("pagination::bootstrap-4") !!} 
+                 @endif
             </div>
         </div>
     </div>

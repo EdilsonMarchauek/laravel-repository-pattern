@@ -27,7 +27,7 @@ class ProductController extends Controller
     public function index()
     {
         //Pegando todos os produtos - with trás o relacionamento de category
-        $products = $this->product->with('category')->get();
+        $products = $this->product->with('category')->paginate();
 
         //Enviando para View
         return view('admin.products.index', compact('products'));
@@ -135,6 +135,9 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
+        //Pega todos os campos exceto o token
+        $filters = $request->except('_token');
+
         //form name = "filtro"
         $products = $this->product
                             ->with('category')
@@ -158,8 +161,8 @@ class ProductController extends Controller
                             })
                             //->toSql();
                             //dd($products);
-                            ->get();
+                            ->paginate();
 
-        return view('admin.products.index', compact('products'));
+        return view('admin.products.index', compact('products', 'filters'));
     }
 }
