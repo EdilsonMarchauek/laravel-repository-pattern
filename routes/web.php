@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 
+//Criando a rota para a pesquisa
+Route::any('admin/products/search', [ProductController::class, 'search'])->name('products.search');
+
 //Criando a Rota para o Controller
 Route::resource('admin/products', ProductController::class);
 

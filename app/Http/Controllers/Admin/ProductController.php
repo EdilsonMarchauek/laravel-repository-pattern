@@ -40,10 +40,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //pluck determina para retonar o título e o id
-        $categories = Category::pluck('title', 'id');
-        
-        return view('admin.products.create', compact('categories'));
+        //Pega categories de AppServiceProvider.php
+        return view('admin.products.create');
     }
 
     /**
@@ -92,12 +90,12 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $categories = Category::pluck('title', 'id');
+        //Pega categories de AppServiceProvider.php
 
         if(!$product = $this->product->find($id))
             return redirect()->back();
         
-        return view('admin.products.edit', compact('product', 'categories'));
+        return view('admin.products.edit', compact('product'));
     }
 
     /**
@@ -133,5 +131,35 @@ class ProductController extends Controller
         return redirect()
                 ->route('products.index')
                 ->withSuccess('Deletado com sucesso!');
+    }
+
+    public function search(Request $request)
+    {
+        //form name = "filtro"
+        $products = $this->product
+                            ->with('category')
+                            ->where(function ($query) use($request) {
+                                //verifica se foi preenchido
+                                if ($request->name){
+                                        $filter = $request->name;
+                                        $query->where(function ($querysub) use ($filter) {
+                                        $querysub->where( 'name', 'LIKE', "%{$filter}%")
+                                                 ->orWhere('description', 'LIKE', "%{$filter}%");
+                                    });    
+                                }
+
+                                if ($request->price){
+                                    $query->where('price', $request->price);
+                                }   
+                                
+                                if ($request->category){
+                                    $query->orWhere('category_id', $request->category);
+                                }   
+                            })
+                            //->toSql();
+                            //dd($products);
+                            ->get();
+
+        return view('admin.products.index', compact('products'));
     }
 }

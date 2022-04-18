@@ -20,7 +20,20 @@
 
         <div class="card card-outline card-success" >
             <div class="box-body" style="padding: 10px">
-                #form
+                <form action="{{ route('products.search')}}" method="POST" class="form form-inline">
+                    @csrf
+                    <select name="category" class="form-control">
+                        <option value="">Categoria</option>
+                        {{-- Para utilizar a variavel $categories precisa criar no AppServiceProvider.php passando pra cá--}}
+                        @foreach ($categories as $id => $category)
+                            <option value="{{ $id }}">{{ $category }}</option>
+                        @endforeach
+                    </select>
+                    <input type="text" name="name" placeholder="Nome:" class="form-control">
+                    <input type="text" name="price" placeholder="Preço:" class="form-control">
+
+                    <button type="submit" class="btn btn-success">Pesquisar</button>
+                </form>
             </div>
         </div>
 
