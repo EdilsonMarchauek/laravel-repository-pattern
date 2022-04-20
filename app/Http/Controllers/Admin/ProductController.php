@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Models\Models\Product;
-use App\Models\Models\Category;
-use App\Http\Controllers\Controller;
+use App\Repositories\Contracts\ProductRepositoryInterface;
 use App\Http\Requests\StoreUpdateProductFormRequest;
+use App\Models\Models\Category;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
 
-    protected $product;
+    protected $repository;
 
     //Injeta o model product no construtor
-    public function __construct(Product $product)
+    public function __construct(ProductRepositoryInterface $repository)
     {
-        $this->product = $product;
+        $this->repository = $repository;
     }
 
     /**
@@ -27,7 +27,7 @@ class ProductController extends Controller
     public function index()
     {
         //Pegando todos os produtos - with trás o relacionamento de category
-        $products = $this->product->with('category')->paginate();
+        $products = $this->repository->paginate();
 
         //Enviando para View
         return view('admin.products.index', compact('products'));
@@ -58,7 +58,7 @@ class ProductController extends Controller
         $product = $category->products()->create($request->all());
         */
 
-        $product = $this->product->create($request->all());
+        $product = $this->repository->store($request->all());
         
         return redirect()
                 ->route('products.index')
@@ -74,7 +74,8 @@ class ProductController extends Controller
     public function show($id)
     {
         //with = pega o relacionamento do model product
-        $product = $this->product->with('category')->where('id', $id)->first();
+        //$product = $this->repository->where('id', $id)->first();
+        $product = $this->repository->findWhereFirst('id', $id);
 
         if(!$product)
         return redirect()->back();
@@ -92,7 +93,7 @@ class ProductController extends Controller
     {
         //Pega categories de AppServiceProvider.php
 
-        if(!$product = $this->product->find($id))
+        if(!$product = $this->repository->findById($id))
             return redirect()->back();
         
         return view('admin.products.edit', compact('product'));
@@ -107,9 +108,7 @@ class ProductController extends Controller
      */
     public function update(StoreUpdateProductFormRequest $request, $id)
     {
-            $this->product
-                    ->find($id)
-                    ->update($request->all());
+            $this->repository->update($id, $request->all());
 
             return redirect()
                             ->route('products.index')
@@ -124,9 +123,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $this->product
-        ->find($id)
-        ->delete();
+        $this->repository->delete($id);
 
         return redirect()
                 ->route('products.index')
@@ -139,7 +136,7 @@ class ProductController extends Controller
         $filters = $request->except('_token');
 
         //form name = "filtro"
-        $products = $this->product
+        $products = $this->repository
                             ->with('category')
                             ->where(function ($query) use($request) {
                                 //verifica se foi preenchido
