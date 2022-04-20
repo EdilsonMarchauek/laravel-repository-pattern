@@ -6,9 +6,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUpdateCategoryFormRequest;
+use App\Repositories\Contracts\CategoryRepositoryInterface;
 
 class CategoryController extends Controller
 {
+
+    protected $repository;
+
+    public function __construct(CategoryRepositoryInterface $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,9 +25,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = DB::table('categories')
-                                ->orderBy('id', 'desc')
-                                ->paginate();
+        $categories = $this->repository->paginate();
         
         return view('admin.categories.index', compact('categories'));
     }
@@ -41,7 +48,7 @@ class CategoryController extends Controller
      */
     public function store(StoreUpdateCategoryFormRequest $request)
     {
-        DB::table('categories')->insert([
+        $this->repository->store([
             'title'         => $request->title,
             'url'           => $request->url,
             'description'   => $request->description,
@@ -60,7 +67,7 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category = DB::table('categories')->where('id', $id)->first();
+        $category = $this->repository->findById($id);
 
         //Verifica se a categoria existe
         if (!$category)
@@ -77,10 +84,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = DB::table('categories')->where('id', $id)->first();
-       
         //Verifica se a categoria existe
-        if (!$category)
+        if (!$category = $this->repository->findById($id))
             return redirect()->back();
 
         return view('admin.categories.edit', compact('category'));
@@ -95,9 +100,8 @@ class CategoryController extends Controller
      */
     public function update(StoreUpdateCategoryFormRequest $request, $id)
     {
-        DB::table('categories')
-            ->where('id', $id)
-            ->update([
+        $this->repository
+            ->update($id, [
                 'title'         => $request->title,
                 'url'           => $request->url,
                 'description'   => $request->description,
@@ -116,7 +120,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('categories')->where('id', $id)->delete();
+        $this->repository->delete($id);
 
         return redirect()
                 ->route('categories.index')
