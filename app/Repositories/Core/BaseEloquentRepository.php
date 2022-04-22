@@ -53,7 +53,7 @@ class BaseEloquentRepository implements RepositoryInterface
     {
         $entity = $this->findById($id);
 
-        return $entity->update();
+        return $entity->update($data);
     }
 
     public function delete($id)

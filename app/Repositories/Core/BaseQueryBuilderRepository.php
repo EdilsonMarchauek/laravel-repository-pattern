@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Repositories\Contracts\RepositoryInterface;
 
 
-//Implementação dos métodos da interface
+//Implementacao dos metodos da interface
 class BaseQueryBuilderRepository implements RepositoryInterface
 {
 
