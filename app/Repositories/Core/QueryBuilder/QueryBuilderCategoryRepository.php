@@ -33,6 +33,7 @@ class QueryBuilderCategoryRepository extends BaseQueryBuilderRepository implemen
                         ->paginate();
     }
 
+    //Poliformismo
     public function store(array $data)
     {
         $data['url'] = Str::kebab($data['title']);
@@ -41,6 +42,7 @@ class QueryBuilderCategoryRepository extends BaseQueryBuilderRepository implemen
                         ->insert($data);
     }
 
+    //Poliformismo
     public function update($id, array $data)
     {
         $data['url'] = Str::kebab($data['title']);
