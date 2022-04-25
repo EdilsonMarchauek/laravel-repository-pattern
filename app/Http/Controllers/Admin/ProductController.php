@@ -28,6 +28,7 @@ class ProductController extends Controller
     {
         //Pegando todos os produtos - with trás o relacionamento de category
         $products = $this->repository
+                            ->orderBy('id')
                             ->relationships('category')
                             ->paginate();
 

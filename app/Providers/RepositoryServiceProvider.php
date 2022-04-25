@@ -6,12 +6,14 @@ use Illuminate\Support\ServiceProvider;
 
 use App\Repositories\Core\Eloquent\{
     EloquentCategoryRepository,
-    EloquentProductRepository
+    EloquentProductRepository,
+    EloquentChartRepository
 };
 
 use App\Repositories\Contracts\{
     CategoryRepositoryInterface,
-    ProductRepositoryInterface
+    ProductRepositoryInterface,
+    ChartRepositoryInterface
 };
 
 use App\Repositories\Core\QueryBuilder\{
@@ -28,14 +30,19 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            ProductRepositoryInterface::class,
-            EloquentProductRepository::class
+            ProductRepositoryInterface::class, //Chama esta classe e
+            EloquentProductRepository::class //Cria este objeto
         );
 
         $this->app->bind(
             CategoryRepositoryInterface::class,
-            //QueryBuilderCategoryRepository::class
-            EloquentCategoryRepository::class
+            QueryBuilderCategoryRepository::class
+            //EloquentCategoryRepository::class
+        );
+
+        $this->app->bind(
+            ChartRepositoryInterface::class,
+            EloquentChartRepository::class
         );
     }
 

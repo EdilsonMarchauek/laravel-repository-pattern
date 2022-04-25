@@ -56,10 +56,10 @@
                             <td>{{ $category->title }}</td>
                             <td>{{ $category->url }}</td>
                             <td>
-                                <a href="{{ route('categories.edit', $category->id)}}" class="badge bg-gradient-yellow">
+                                <a href="{{ route('categories.edit', $category->id) }}" class="badge bg-yellow">
                                     Editar
                                 </a>
-                                <a href="{{ route('categories.show', $category->id)}}" class="badge badge-secondary">
+                                <a href="{{ route('categories.show', $category->id) }}" class="badge bg-primary">
                                     Detalhes
                                 </a>
                             </td>
