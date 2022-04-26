@@ -11,6 +11,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 
     Route::any('products/search', [ProductController::class, 'search'])->name('products.search');
     Route::resource('products', ProductController::class);
+    
     Route::any('categories/search', [CategoryController::class, 'search'])->name('categories.search');
     Route::resource('categories', CategoryController::class);
 
@@ -22,13 +23,7 @@ Auth::routes(['register' => false]);
 
 Route::get('/', [SiteController::class, 'index']);
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Route::get('home', function(){
-// })->name('home');
 
 
