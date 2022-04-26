@@ -227,13 +227,23 @@ return [
     'menu' => [
         'OPÇÕES',
         [
+            'text' => 'Dashboard',
+            'url'  => 'admin',
+        ],
+        [
             'text' => 'Categorias',
             'url'  => 'admin/categories',
+            'icon' => 'fa fa-object-group',
         ],
         [
             'text'        => 'Produtos',
             'url'         => 'admin/products',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fa fa-tasks',
+        ],
+        [
+            'text'        => 'Usuários',
+            'url'         => 'admin/users',
+            'icon'        => 'fa fa-users',
         ],
     ],
 
