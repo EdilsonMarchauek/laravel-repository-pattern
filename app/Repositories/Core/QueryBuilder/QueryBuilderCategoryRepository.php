@@ -51,5 +51,13 @@ class QueryBuilderCategoryRepository extends BaseQueryBuilderRepository implemen
                         ->where('id', $id)
                         ->update($data);
     }
+
+    public function productsByCategoryId($id)
+    {
+        return $this->db->table('products')
+                        ->where('category_id', $id)
+                        ->get();
+
+    }
   
 }

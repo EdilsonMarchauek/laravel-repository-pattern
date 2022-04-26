@@ -118,11 +118,17 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        $products = $this->repository->productsByCategoryId($id);
+        if(count($products) > 0)
+            return redirect()
+                    ->route('categories.index')
+                    ->with('message', 'Não pode deletar porque existem produtos vinculados a essa categoria!');
+
         $this->repository->delete($id);
 
         return redirect()
                 ->route('categories.index')
-                ->withSuccess('Cadastro excluído com sucesso');
+                ->withSuccess('Categoria deletada com sucesso');
     }
 
 

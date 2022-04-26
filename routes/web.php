@@ -5,27 +5,25 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 
-//Criando a rota para a pesquisa
-Route::any('admin/products/search', [ProductController::class, 'search'])->name('products.search');
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 
-//Criando a Rota para o Controller
-Route::resource('admin/products', ProductController::class);
+    Route::any('products/search', [ProductController::class, 'search'])->name('products.search');
+    Route::resource('products', ProductController::class);
+    Route::any('categories/search', [CategoryController::class, 'search'])->name('categories.search');
+    Route::resource('categories', CategoryController::class);
 
-Route::get('home', function(){
-})->name('home');
+    Route::get('/', function(){})->name('admin');
+});
 
-//Criando a Rota para a pesquisa
-Route::any('admin/categories/search', [CategoryController::class, 'search'])->name('categories.search');
-
-//Criando a Rota para o Controller
-Route::resource('admin/categories', CategoryController::class);
+Auth::routes(['register' => false]);
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Route::get('home', function(){
+// })->name('home');
 
 

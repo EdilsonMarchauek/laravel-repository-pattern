@@ -11,3 +11,9 @@
         {{ session('success') }}
     </div>
 @endif
+
+@if (session('message'))
+    <div class="alert alert-warning" align="center">
+        {{ session('message') }}
+    </div>
+@endif

@@ -57,7 +57,7 @@
                         @foreach ($products as $product)
                         <tr>
                             <th scope="row">{{ $product->name }}</th>
-                            <td>{{ $product->category->title }}</td>
+                            <td>{{ $product->category->title??null }}</td>
                             <td>R$ {{ $product->price }}</td>
                             <td>
                                 <a href="{{ route('products.edit', $product->id)}}" class="badge bg-gradient-yellow">
